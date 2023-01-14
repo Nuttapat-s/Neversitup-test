@@ -5,7 +5,7 @@ import { UserAuth } from '../entity/user.auth.entity';
 import { User } from '../entity/user.entity';
 import { UserService } from '../service/user.service';
 
-@Controller()
+@Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
