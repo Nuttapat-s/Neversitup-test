@@ -11,8 +11,8 @@ export class User {
   @Column({ length: 30 })
   surname: string;
 
-  @Column("int", { array: true })
-  order_history_id: string[];
+  @Column("text")
+  order_history_track: string;
 
   @Column({ length: 30 })
   username: string;

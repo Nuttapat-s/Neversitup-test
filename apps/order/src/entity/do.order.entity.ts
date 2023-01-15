@@ -12,3 +12,7 @@ export class CancleOrderEntity {
 export class TrackEntity {
      track: string
 }
+
+export class orderHistoryEntity {
+    userId: number
+}

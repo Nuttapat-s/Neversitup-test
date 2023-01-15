@@ -24,7 +24,7 @@ export class UserService {
           throw new Error('password maximum length is 8')
         }
 
-        body.order_history_id = [];
+        body.order_history_track = '';
         await this.userRepository.save(body);
 
         return 'register complete';
@@ -50,25 +50,27 @@ export class UserService {
         throw new Error('Password is wrong')
       }
 
-      let payload = {'username':user.username,'password':user.password}
-      
+      let payload = { 'username': user.username, 'password': user.password }
+
 
       return {
         access_token: this.jwtTokenService.sign(payload),
       };
-      
+
     } catch (error) {
       throw error;
     }
 
   }
 
-  async getUserInfo(token:string){
+  async getUserInfo(token: string) {
     const existUser = await this.jwtTokenService.verify(token);
-    const user = await this.userRepository.findOneBy({ username:existUser.username });
+    const user = await this.userRepository.findOneBy({ username: existUser.username });
 
     delete user.password
     return user
 
   }
+
+  
 }

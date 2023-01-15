@@ -11,8 +11,8 @@ export class Product {
   @Column()
   price: number;
 
-  @Column("text", { array: true })
-  user_id: string[];
+  @Column("text")
+  user_id_list: string;
 
   @Column({ length: 255 })
   detail: string;
