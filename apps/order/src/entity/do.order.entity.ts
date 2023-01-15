@@ -5,7 +5,7 @@ export class DoOrderEntity {
 }
 
 export class CancleOrderEntity {
-    orderId: number
+    userId: number
      track: string
 }
 

@@ -76,21 +76,21 @@ export class OrderService {
 
   }
 
-  async cancleOrder(orderId: number, track: string) {
+  async cancleOrder(userId: number, track: string) {
     try {
-      const orderData = await this.orderRepository.findOneBy({ id: orderId });
+      const userData = await this.userRepository.findOneBy({ id: userId });
 
-      if (!orderData) {
-        throw new Error('orderId not found')
+      if (!userData) {
+        throw new Error('userId not found')
       }
 
-      if (orderData.order_track.length !== 0) {
-        let arr = orderData.order_track.split('|')
+      if (userData.order_history_track.length !== 0) {
+        let arr = userData.order_history_track.split('|')
         const index = arr.indexOf(track);
         arr.splice(index, index >= 0 ? 1 : 0)
-        orderData.order_track = '';
+        userData.order_history_track = '';
         for(let data of arr){
-          orderData.order_track += data+'|'
+          userData.order_history_track += data+'|'
         }
       }else{
         throw new Error('no data to cancle')
@@ -98,10 +98,13 @@ export class OrderService {
 
 
 
-      await this.orderRepository.update({ id: orderId }, orderData)
+      await this.userRepository.update({ id: userId }, userData)
 
-      await this.OrderDetailRepository.delete({ track_uuid: track })
+      const deleteData = await this.OrderDetailRepository.findBy({track_uuid:track})
+      await this.OrderDetailRepository.remove(deleteData)
 
+      const deleteOrderData = await this.orderRepository.findBy({order_track:track})
+      await this.orderRepository.remove(deleteOrderData)
 
 
 
@@ -130,7 +133,6 @@ export class OrderService {
       }
 
       let arr = trackList.split('|')
-      console.log(arr)
       // return await this.orderRepository.findBy({
       //   order_track: Raw((alias) => `${alias} IN (:...order_track)`, {
       //     order_track: arr,

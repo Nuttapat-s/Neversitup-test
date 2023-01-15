@@ -13,7 +13,7 @@ export class OrderController {
 
   @Put('cancleOrder')
   async cancleOrder(@Body() body:CancleOrderEntity){
-    return await this.orderService.cancleOrder(body.orderId,body.track);
+    return await this.orderService.cancleOrder(body.userId,body.track);
   }
 
   @Post('getOrderDetail')
